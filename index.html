@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FieldX Technologies - AI-Enhanced Night Vision Systems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00ffff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ffff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%2300ffff;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%23000000;stop-opacity:0" /></radialGradient></defs><rect width="1200" height="800" fill="url(%23grad1)"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content .tagline {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #00ffff, #0080ff);
+            color: #000;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-dark {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            color: #00ffff;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Technology Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .tech-card h3 {
+            color: #00ffff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* Markets Section */
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .market-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .market-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+
+        .market-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .market-card h3 {
+            color: #00ffff;
+            margin-bottom: 1rem;
+        }
+
+        .market-card p {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            margin-top: 2rem;
+        }
+
+        .contact-info h3 {
+            color: #00ffff;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            color: #ccc;
+        }
+
+        .contact-item a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-details {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">FieldX</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#technology">Technology</a></li>
+                    <li><a href="#markets">Markets</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>FieldX Technologies</h1>
+                <div class="tagline">Next-Generation Vision Intelligence</div>
+                <p>AI-enhanced night vision and low-light observation systems leveraging cutting-edge multi-spectral imaging and proprietary deep learning models for superior situational awareness.</p>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="technology" class="section-dark fade-in">
+        <div class="container">
+            <h2 class="section-title">Advanced Technology</h2>
+            <p class="section-subtitle">Our proprietary AI-powered platform delivers unprecedented capabilities in low-light and nighttime environments</p>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>🎯 High-Fidelity Detection</h3>
+                    <p>Advanced object detection and tracking in low-light and nighttime conditions with superior accuracy and reliability.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>🔭 Super-Resolution Imaging</h3>
+                    <p>Long-distance and wide-area imaging capabilities that reveal details invisible to conventional systems.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>🧠 AI Scene Analysis</h3>
+                    <p>Intelligent interpretation of complex nighttime scenes with automated threat identification and analysis.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>🗺️ 3D Spatial Mapping</h3>
+                    <p>Enhanced spatial awareness through advanced 3D reconstruction and environmental mapping.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>🚁 Drone Integration</h3>
+                    <p>Seamless integration with drone technology for dynamic, close-range inspection and monitoring capabilities.</p>
+                </div>
+                <div class="tech-card">
+                    <h3>⚡ Real-Time Processing</h3>
+                    <p>Edge-based AI processing for immediate intelligence and real-time alert generation without cloud dependency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="markets" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Target Markets</h2>
+            <p class="section-subtitle">Empowering critical operations across defence, industrial, and public safety sectors</p>
+            
+            <div class="markets-grid">
+                <div class="market-card">
+                    <div class="market-icon">🛡️</div>
+                    <h3>Defence</h3>
+                    <p>Border surveillance, night patrols, covert operations with enhanced tactical advantage</p>
+                </div>
+                <div class="market-card">
+                    <div class="market-icon">🏭</div>
+                    <h3>Industrial</h3>
+                    <p>Nighttime security for ports, oil rigs, manufacturing plants, and critical infrastructure</p>
+                </div>
+                <div class="market-card">
+                    <div class="market-icon">👮</div>
+                    <h3>Public Safety</h3>
+                    <p>Law enforcement night operations, search and rescue missions, emergency response</p>
+                </div>
+                <div class="market-card">
+                    <div class="market-icon">🚢</div>
+                    <h3>Transportation</h3>
+                    <p>Enhanced vision for nighttime maritime and aviation operations, traffic monitoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-dark fade-in">
+        <div class="container">
+            <h2 class="section-title">Connect With Us</h2>
+            
+            <div class="contact-info">
+                <h3>Ready to Transform Your Vision Capabilities?</h3>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <strong>Email:</strong><br>
+                        <a href="mailto:kaustuv@fieldx.ai">kaustuv@fieldx.ai</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Phone:</strong><br>
+                        <a href="tel:+919830228071">+91 98302 28071</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Location:</strong><br>
+                        Singapore & India
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add floating particles effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '2px';
+            particle.style.height = '2px';
+            particle.style.background = '#00ffff';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.opacity = '0.3';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            particle.style.zIndex = '-1';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { transform: 'translateY(0px)', opacity: 0.3 },
+                { transform: `translateY(-${window.innerHeight + 100}px)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            });
+            
+            animation.addEventListener('finish', () => {
+                particle.remove();
+            });
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 300);
+    </script>
+</body>
+</html>
